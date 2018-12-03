@@ -1,0 +1,24 @@
+ext {
+    versions = [
+            okHttp          : "3.9.1",
+            retrofit        : "2.3.0",
+            dexter          : "5.0.0"
+    ]
+
+    retrofit = [
+            retrofit     : "com.squareup.retrofit2:retrofit:$versions.retrofit",
+            gsonConverter: "com.squareup.retrofit2:converter-gson:$versions.retrofit"
+    ]
+
+    okHttp = [
+            logger: "com.squareup.okhttp3:logging-interceptor:$versions.okHttp",
+            okhttp  : "com.squareup.okhttp3:okhttp:$versions.okHttp"
+    ]
+
+    others = [
+            permissions: "com.karumi:dexter:$versions.dexter"
+    ]
+
+    networkLibs = retrofit.values() + okHttp.values()
+    otherLibs = others.values()
+}
