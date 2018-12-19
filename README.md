@@ -1,4 +1,3 @@
-[![Release](https://jitpack.io/v/User/Repo.svg)]
-(https://jitpack.io/#User/Repo)
+[![](https://jitpack.io/v/mahi-accemy/CustomerActivityLogger.svg)](https://jitpack.io/#mahi-accemy/CustomerActivityLogger)
 
 # CustomerActivityLogger
