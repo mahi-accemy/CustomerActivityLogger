@@ -1,5 +1,9 @@
 package com.accemy.mahindralogger;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLSession;
+
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -32,6 +36,14 @@ public interface MahindraLoggerService {
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             OkHttpClient client = new OkHttpClient.Builder()
                     .addInterceptor(interceptor)
+                    .hostnameVerifier(new HostnameVerifier() {
+                        @Override
+                        public boolean verify(String hostname, SSLSession session) {
+//                            HostnameVerifier hv = HttpsURLConnection.getDefaultHostnameVerifier();
+//                            return hv.verify("api.skyscanner.net", session);
+                            return true;
+                        }
+                    })
                     .build();
 
             Retrofit retrofit = new Retrofit.Builder()
