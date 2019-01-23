@@ -52,6 +52,7 @@ public class MahindraLogger {
     private MahindraLoggerService mWebService;
     private Gson mGson;
     private SimpleDateFormat dateFormat;
+    private boolean isProd = false;
 
     //private constructor.
     private MahindraLogger(){
@@ -73,7 +74,7 @@ public class MahindraLogger {
             sSoleInstance.mContext = applicationContext;
             sSoleInstance.dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.sss Z");
 
-            initialiseConstants(null);
+            initialiseConstants(null, null, null);
         }
 
         File logsDirectory = new File(sSoleInstance.mContext.getFilesDir()+ File.separator + DIRECTORY_NAME);
@@ -85,9 +86,22 @@ public class MahindraLogger {
         return sSoleInstance;
     }
 
+    public MahindraLogger setProd(boolean isProduction){
+        this.isProd = isProduction;
+        mWebService = null;
+        return sSoleInstance;
+    }
+
     public MahindraLogger initConsts(Activity activity){
         if(activity != null){
-            initialiseConstants(activity);
+            initialiseConstants(activity, null, null);
+        }
+        return sSoleInstance;
+    }
+
+    public MahindraLogger initConsts(Activity activity, String interventionName, String source){
+        if(activity != null){
+            initialiseConstants(activity, interventionName, source);
         }
         return sSoleInstance;
     }
@@ -100,7 +114,7 @@ public class MahindraLogger {
     String interventionId = "N/A";
     String interventionName = "N/A";
 
-    private static void initialiseConstants(Activity activity){
+    private static void initialiseConstants(Activity activity, String interventionName, String interventionId){
         try {
 
             try {
@@ -121,6 +135,13 @@ public class MahindraLogger {
                 }
                 builder.append(sSoleInstance.getScreenSizeInches(activity)).append("_v").append(sSoleInstance.version);
                 sSoleInstance.interventionId = builder.toString();
+
+                if(interventionName != null && interventionName.length() > 0){
+                    sSoleInstance.interventionName = interventionName;
+                }
+                if(interventionId != null && interventionId.length() > 0){
+                    sSoleInstance.interventionId = interventionId;
+                }
 
                 Dexter.withActivity(activity)
                         .withPermission(Manifest.permission.READ_PHONE_STATE)
@@ -210,10 +231,14 @@ public class MahindraLogger {
 
     /******************************** Logging and related Async Tasks *****************************/
 
-    public void log(@NonNull String mileId, String userName, String sessionId, String pageId, String pageName,
+    public void log(@NonNull String customerId, @NonNull String mileId, String userName, String sessionId, String pageId, String pageName,
                     String previousPageId, String previousPageName, String eventId, String eventName,
                     String enquiryId, String tdBookingId, String modelCd, String modelGrpCd, String personaPitched,
                     String sessionStartTime, String sessionEndTime, String personaName, String eventType){
+
+        if(customerId == null || customerId.trim().equalsIgnoreCase("")){
+            return;
+        }
 
         if(mileId == null || mileId.trim().equalsIgnoreCase("")){
             return;
@@ -227,7 +252,7 @@ public class MahindraLogger {
             timestamp = date.toString();
         }
 
-        MahindraLogItem item = new MahindraLogItem(mileId, userName, sessionId, timestamp, pageId, pageName,
+        MahindraLogItem item = new MahindraLogItem(customerId, mileId, userName, sessionId, timestamp, pageId, pageName,
                 previousPageId, previousPageName, eventId, eventName, enquiryId, tdBookingId, modelCd,
                 modelGrpCd, personaPitched, sessionStartTime, sessionEndTime, personaName, eventType);
         new MahindraLogTask().execute(item, null, null);
@@ -276,7 +301,7 @@ public class MahindraLogger {
 
         protected Void doInBackground(Void... voids) {
             if(mWebService == null){
-                mWebService = MahindraLoggerService.Creator.newMahindraLoggerService();
+                mWebService = MahindraLoggerService.Creator.newMahindraLoggerService(MahindraLogger.this.isProd);
             }
             if(mGson == null) {
                 mGson = new GsonBuilder().create();

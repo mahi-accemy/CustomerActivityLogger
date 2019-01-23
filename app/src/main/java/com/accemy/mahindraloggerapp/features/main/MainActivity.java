@@ -74,10 +74,13 @@ public class MainActivity extends BaseActivity implements MainMvpView, ErrorView
                                 pokemon ->{
 //                                    startActivity(DetailActivity.getStartIntent(this, pokemon));
 
-                                    MahindraLogger.getInstance(getApplication()).initConsts(MainActivity.this)
-                                            .log("A12MhKJN33455", pokemon, "12fjnfhio34ljasasojnv2343asd", "", "", "",
-                                            "", "", "", "", "", "XUVNMM6547786876", "XUVN",
-                                            "", "12-10-2018 12:23:45", "12-10-2018 12:33:45", "", "");
+                                    MahindraLogger.getInstance(getApplication())
+                                            .setProd(false)
+                                            .initConsts(MainActivity.this, "SomeInterventionName", "SomeInterventionId")
+                                            .log("13233", "A12MhKJN33455", pokemon, "12fjnfhio34ljasasojnv2343asd",
+                                                    "", "", "", "", "", "",
+                                                    "", "", "XUVNMM6547786876", "XUVN", "",
+                                                    "12-10-2018 12:23:45", "12-10-2018 12:33:45", "", "");
 
                                 },
                                 throwable -> {

@@ -6,10 +6,10 @@ import java.util.ArrayList;
 
 public class MahindraLogItem {
 
-    @SerializedName("CustomerID") private static final String customerId = "";
+    @SerializedName("CustomerID") private String customerId = "";
     @SerializedName("MileID") private String mMileId;
-    @SerializedName("userName") private String mUserName;
-    @SerializedName("interventionID") private static String interventionId;
+    @SerializedName("Name") private String mUserName;
+    @SerializedName("Source") private static String source;
     @SerializedName("interventionName") private static String interventionName;
     @SerializedName("appVersion") private static String appVersion;
     @SerializedName("devicename") private static String deviceName;
@@ -27,20 +27,21 @@ public class MahindraLogItem {
 
     @SerializedName("ActivityEvents") private ArrayList<ActivityEvent> mEvents;
 
-    public static void INIT_CONSTS(String appVersion, String deviceName, String osName, String deviceImieNo, String interventionId, String interventionName) {
+    public static void INIT_CONSTS(String appVersion, String deviceName, String osName, String deviceImieNo, String source, String interventionName) {
         MahindraLogItem.appVersion = appVersion;
         MahindraLogItem.deviceName = deviceName;
         MahindraLogItem.osName = osName;
         MahindraLogItem.deviceImieNo = deviceImieNo;
-        MahindraLogItem.interventionId = interventionId;
+        MahindraLogItem.source = source;
         MahindraLogItem.interventionName = interventionName;
     }
 
-    public MahindraLogItem(String mileId, String userName, String sessionId, String timestamp, String pageID, String pageName,
+    public MahindraLogItem(String customerId, String mileId, String userName, String sessionId, String timestamp, String pageID, String pageName,
                            String previousPageId, String previousPageName, String eventId, String eventName,
                            String enquiryId, String tdBookingId, String modelCd, String modelGrpCd,
                            String personaPitched, String sessionStartTime, String sessionEndTime, String personaName,
                            String eventType){
+        this.customerId = customerId;
         this.mMileId = mileId;
         this.mUserName = userName;
         this.mSessionId = sessionId;
