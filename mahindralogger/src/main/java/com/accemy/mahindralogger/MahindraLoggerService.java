@@ -19,7 +19,7 @@ import retrofit2.http.POST;
 public interface MahindraLoggerService {
 
     String UAT_ENDPOINT = "http://mapi.sitsyouv.com/"; //Test Environment
-    String PROD_ENDPOINT = "https://mapi.mahindrasyouv.com/"; //Live Environment
+    String PROD_ENDPOINT = "http://mapi.mahindrasyouv.com/"; //Live Environment
 
 //    @Headers({
 //            "x-functions-key: J3C4/9R8RGQzBYApFH6hm1VyUZ7M7XUhjzanFBpbaGDB1YAUyHXl0A==", //Test Environment
