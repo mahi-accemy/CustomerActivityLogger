@@ -72,7 +72,7 @@ public class MahindraLogger {
 
             //Actions to be done once, at the time of singleton creation
             sSoleInstance.mContext = applicationContext;
-            sSoleInstance.dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.sss Z");
+            sSoleInstance.dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.sss");
 
             initialiseConstants(null, null, null);
         }
