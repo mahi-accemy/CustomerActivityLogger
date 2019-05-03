@@ -53,6 +53,7 @@ public class MahindraLogger {
     private Gson mGson;
     private SimpleDateFormat dateFormat;
     private boolean isProd = false;
+    private boolean isSsl = true;
 
     //private constructor.
     private MahindraLogger(){
@@ -88,6 +89,12 @@ public class MahindraLogger {
 
     public MahindraLogger setProd(boolean isProduction){
         this.isProd = isProduction;
+        mWebService = null;
+        return sSoleInstance;
+    }
+
+    public MahindraLogger setSsl(boolean isSsl){
+        this.isSsl = isSsl;
         mWebService = null;
         return sSoleInstance;
     }
@@ -301,7 +308,7 @@ public class MahindraLogger {
 
         protected Void doInBackground(Void... voids) {
             if(mWebService == null){
-                mWebService = MahindraLoggerService.Creator.newMahindraLoggerService(MahindraLogger.this.isProd);
+                mWebService = MahindraLoggerService.Creator.newMahindraLoggerService(MahindraLogger.this.isProd, MahindraLogger.this.isSsl);
             }
             if(mGson == null) {
                 mGson = new GsonBuilder().create();

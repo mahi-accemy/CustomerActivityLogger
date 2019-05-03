@@ -76,6 +76,7 @@ public class MainActivity extends BaseActivity implements MainMvpView, ErrorView
 
                                     MahindraLogger.getInstance(getApplication())
                                             .setProd(false)
+                                            .setSsl(true)
                                             .initConsts(MainActivity.this, "SomeInterventionName", "SomeInterventionId")
                                             .log("13233", "A12MhKJN33455", pokemon, "12fjnfhio34ljasasojnv2343asd",
                                                     "", "", "", "", "", "",
